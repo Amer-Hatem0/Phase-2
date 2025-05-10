@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_PROJECT } from '../graphql/mutations';
+import { CREATE_PROJECT } from '../graphql/schema';
 
 export default function AddProjectModal({ onClose }) {
   const [formData, setFormData] = useState({
@@ -13,9 +13,20 @@ export default function AddProjectModal({ onClose }) {
   });
 
   const [createProject] = useMutation(CREATE_PROJECT, {
+    variables: {
+      title: formData.title,
+      description: formData.description,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      memberIds: formData.members
+    },
     onCompleted: () => {
       onClose();
-      // Optionally refetch projects here
+      // Optionally refetch queries here
+    },
+    onError: (error) => {
+      console.error("Error creating project:", error);
+      // Handle error (show toast, etc.)
     }
   });
 

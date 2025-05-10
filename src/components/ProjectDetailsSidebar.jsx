@@ -16,7 +16,9 @@ export default function ProjectDetailsSidebar({ project, onClose }) {
         <div className="project-info mb-6">
           <p className="mb-2"><span className="font-bold">Category:</span> {project.category}</p>
           <p className="mb-2"><span className="font-bold">Description:</span> {project.description}</p>
-          <p className="mb-2"><span className="font-bold">Students:</span> {project.members.join(', ')}</p>
+          <p className="mb-2"><span className="font-bold">Students:</span> 
+            {project.members.map(member => member.username).join(', ')}
+          </p>
           <p className="mb-2"><span className="font-bold">Start Date:</span> {project.startDate}</p>
           <p className="mb-2"><span className="font-bold">End Date:</span> {project.endDate}</p>
         </div>

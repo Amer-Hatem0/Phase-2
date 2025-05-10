@@ -4,8 +4,12 @@ export default function TaskCard({ task }) {
         <p className="mb-1"><span className="font-bold">Task ID:</span> {task.id}</p>
         <p className="mb-1"><span className="font-bold">Task Name:</span> {task.title}</p>
         <p className="mb-1"><span className="font-bold">Description:</span> {task.description}</p>
-        <p className="mb-1"><span className="font-bold">Assigned Student:</span> {task.assignedTo}</p>
-        <p className="mb-1"><span className="font-bold">Status:</span> {task.status}</p>
+        <p className="mb-1"><span className="font-bold">Assigned Student:</span> 
+           {task.assignedTo.username}
+        </p>
+        <p className="mb-1"><span className="font-bold">Status:</span> 
+           {task.status}
+        </p>
       </div>
     );
   }

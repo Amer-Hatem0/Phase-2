@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { GET_PROJECTS } from '../graphql/queries';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_PROJECTS } from '../graphql/schema';
 import ProjectCard from '../components/ProjectCard';
 import ProjectDetailsSidebar from '../components/ProjectDetailsSidebar';
 import AddProjectModal from '../components/AddProjectModal';
@@ -14,7 +14,12 @@ export default function Projects() {
   const [statusFilter, setStatusFilter] = useState('All Statuses');
   
   // Fetch projects from backend
-  const { loading, error, data } = useQuery(GET_PROJECTS);
+  const { loading, error, data } = useQuery(GET_PROJECTS, {
+    variables: {
+      // Add any required variables here
+    },
+    fetchPolicy: 'network-only' // Ensures fresh data
+  });
   
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -116,10 +121,15 @@ export default function Projects() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map(project => (
               <ProjectCard 
-                key={project.id} 
-                project={project}
-                onClick={() => setSelectedProject(project)}
-              />
+              key={project.id} 
+              project={{
+                ...project,
+                members: project.members.map(member => member.username), // Extract usernames
+                category: project.category || 'Uncategorized', // Add fallback
+                progress: project.progress || 0 // Add fallback
+              }}
+              onClick={() => setSelectedProject(project)}
+            />
             ))}
           </div>
         </div>
