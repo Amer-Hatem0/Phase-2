@@ -2,7 +2,7 @@
 import { gql, useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+// import { LOGIN } from './graphql/schema';
 const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
@@ -20,23 +20,31 @@ const LOGIN = gql`
 export default function Login() {
   const [form, setForm] = useState({ username: '', password: '' });
   const [login] = useMutation(LOGIN);
+  // const [login] = useMutation(LOGIN, {
+  //   onCompleted: ({ login: { token, user } }) => {
+  //     localStorage.setItem('token', token); // Store token only
+  //     navigate(user.role === 'ADMIN' ? `/admin/${user.id}` : `/student/${user.id}`);
+  //   },
+  //   onError: (err) => alert(`Login failed: ${err.message}`),
+  // });
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await login({ variables: form });
-      const { token, user, redirectUrl } = res.data.login;
+      // const res = await login({ variables: form });
+      // const { token, user, redirectUrl } = res.data.login;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      // localStorage.setItem('token', token);
+      // localStorage.setItem('currentUser', JSON.stringify(user));
 
     
-      if (user.role === 'admin') {
-        navigate(`/admin/${user.id}`);
-      } else {
-        navigate(`/student/${user.id}`);
-      }
+      // if (user.role === 'admin') {
+      //   navigate(`/admin/${user.id}`);
+      // } else {
+      //   navigate(`/student/${user.id}`);
+      // }
+      await login({ variables: {username, password}});
     } catch (err) {
       alert("Login error: " + err.message);
     }

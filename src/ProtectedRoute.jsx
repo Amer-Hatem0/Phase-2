@@ -31,15 +31,22 @@
 
 //   return children;
 // }
-
+import { useQuery } from '@apollo/client';
+import { GET_ME } from './graphql/queries';  
 import { Navigate } from "react-router-dom";
 
 export default function ProtectedRoute({ role, children }) {
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-
-  if (!user || user.role !== role) {
-    return <Navigate to="/login" />;
-  }
-
+  const { data, loading } = useQuery(GET_ME);
+  if (loading) return null;
+  if (!data?.me || data.me.role !== role) return <Navigate to="/login" />;
   return children;
 }
+// export default function ProtectedRoute({ role, children }) {
+//   const user = JSON.parse(localStorage.getItem("currentUser"));
+
+//   if (!user || user.role !== role) {
+//     return <Navigate to="/login" />;
+//   }
+
+//   return children;
+// }
