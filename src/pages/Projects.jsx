@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_PROJECTS } from '../graphql/schema';
+import { GET_PROJECTS, GET_ME } from '../graphql/schema';
 import ProjectCard from '../components/ProjectCard';
 import ProjectDetailsSidebar from '../components/ProjectDetailsSidebar';
 import AddProjectModal from '../components/AddProjectModal';
@@ -12,7 +12,7 @@ export default function Projects() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All Statuses');
-  
+  const { data: userData } = useQuery(GET_ME);
   // Fetch projects from backend
   const { loading, error, data } = useQuery(GET_PROJECTS, {
     variables: {
@@ -21,15 +21,22 @@ export default function Projects() {
     fetchPolicy: 'network-only' // Ensures fresh data
   });
   
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("currentUser"));
+  //   if (!user || user.role !== "admin") {
+  //     alert("Access denied!");
+  //     navigate("/login");
+  //   } else {
+  //     document.getElementById("adminname").innerText = user.username;
+  //   }
+  // }, [navigate]);
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (!user || user.role !== "admin") {
-      alert("Access denied!");
-      navigate("/login");
+    if (userData?.me && userData.me.role === "ADMIN") {
+      document.getElementById("adminname").innerText = userData.me.username;
     } else {
-      document.getElementById("adminname").innerText = user.username;
+      navigate("/login");
     }
-  }, [navigate]);
+  }, [userData, navigate]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

@@ -1,18 +1,20 @@
 // 📁 src/pages/AdminDashboard.jsx
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import '../styles/dashboard.css';
+import { useQuery } from '@apollo/client';
+import { GET_ME } from '../graphql/queries';  
+// // import '../styles/dashboard.css';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-
+  const { data, loading } = useQuery(GET_ME);
+  
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (!user || user.role !== "admin") {
-      alert("Access denied!");
+    // const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!loading && (!data?.me || data.me.role !== "ADMIN")) {
       navigate("/login");
-    } else {
-      document.getElementById("adminname").innerText = user.username;
+    } else if (data?.me) {
+      document.getElementById("adminname").innerText = data.me.username;
     }
 
     const updateDateTime = () => {
@@ -23,7 +25,7 @@ export default function AdminDashboard() {
     updateDateTime();
     const interval = setInterval(updateDateTime, 1000);
     return () => clearInterval(interval);
-  }, [navigate]);
+  }, [data, loading, navigate]);
 
   return (
     <div className="dashboard-container min-h-screen bg-gray-900 text-white font-sans">
