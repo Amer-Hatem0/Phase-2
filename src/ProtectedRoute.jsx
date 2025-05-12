@@ -1,19 +1,44 @@
-import { useQuery } from '@apollo/client';
-import { GET_ME } from './graphql/queries';
-import { Navigate } from 'react-router-dom';
+// import { useEffect } from 'react';
+// import { useNavigate, useLocation } from 'react-router-dom';
+// import { jwtDecode } from 'jwt-decode';
 
-export default function ProtectedRoute({ requiredRole, children }) {
-  const { data, loading, error } = useQuery(GET_ME, {
-    fetchPolicy: 'network-only' // Always check with server
-  });
 
-  if (loading) return <div>Loading...</div>;
-  if (error || !data?.me) {
-    sessionStorage.removeItem('token');
+// export default function ProtectedRoute({ children, role: requiredRole }) {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     if (!token) {
+//       return navigate('/login', { replace: true });
+//     }
+
+//     try {
+//       const decoded = jwtDecode(token);
+
+   
+//       if (requiredRole && decoded.role !== requiredRole) {
+//         return navigate('/login', { replace: true });
+//       }
+
+  
+
+//     } catch (err) {
+//       console.error('Invalid token');
+//       navigate('/login', { replace: true });
+//     }
+//   }, [navigate, location, requiredRole]);
+
+//   return children;
+// }
+
+import { Navigate } from "react-router-dom";
+
+export default function ProtectedRoute({ role, children }) {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+
+  if (!user || user.role !== role) {
     return <Navigate to="/login" />;
-  }
-  if (data.me.role !== requiredRole) {
-    return <Navigate to="/unauthorized" />;
   }
 
   return children;
