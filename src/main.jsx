@@ -5,7 +5,7 @@ import { ApolloProvider } from '@apollo/client';
 import { client } from './apolloClient.js';
 import { BrowserRouter } from 'react-router-dom';
 import './output.css';
-
+ 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ApolloProvider client={client}>
     <BrowserRouter>

@@ -6,7 +6,6 @@ import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './ProtectedRoute';
 import TasksPage from './pages/TasksPage';
 import Chats from './pages/Chats';
-
 function App() {
   return (
 
