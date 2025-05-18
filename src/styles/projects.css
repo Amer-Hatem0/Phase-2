@@ -1,0 +1,327 @@
+/* * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  } */
+  body {
+    height: 100vh;
+    background-color: #111;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+  }
+  .main-content {
+    flex-grow: 1;
+    background-color: rgb(28, 28, 28);
+    color: white;
+    padding: 20px;
+}
+#projectsContainer {
+    display: grid
+;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+.project-card {
+    color: rgb(255, 255, 255);
+    display: inline-block;
+    max-width: 300px;
+    overflow-wrap: break-word;
+    background: rgb(37, 37, 37);
+    padding: 15px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(67, 67, 67);
+    border-image: initial;
+    border-radius: 8px;
+}
+.project-card:hover {
+    border-color: #f09e23;
+}
+.card-header {
+    display: flex
+;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.progress-bar-container {
+    width: 100%;
+    height: 25px;
+    margin-top: 10px;
+    background: rgb(67, 63, 63);
+    border-radius: 5px;
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    text-align: center;
+    line-height: 25px;
+    font-weight: bold;
+    color: white;
+    background: rgb(0, 123, 255);
+}
+.project-dates {
+    display: flex
+;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+    color: rgb(102, 102, 102);
+}
+.start-date {
+    text-align: left;
+}
+.end-date {
+    text-align: right;
+}
+.project-title {
+    color: rgb(0, 123, 255);
+}
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    padding: 20px;
+    color: #007bff;
+  }
+  .timeSpan {
+    color: #fff;
+  }
+  .logout-btn {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+  }
+  .logout-btn:hover {
+    background-color: #c82333;
+  }
+/* تصميم الـ Modal */
+.modal {
+  display: none; /* اخفاء النافذة افتراضيًا */
+  position: absolute !important;
+  z-index: 1000; /* فوق كل العناصر */
+  left: 50%;
+  top: 50%;
+  height: fit-content;
+  transform: translate(-50%, -50%); /* لجعلها في المنتصف */
+  width: 50vw; /* عرض مناسب */
+  max-width: 600px; /* الحد الأقصى للعرض */
+  background-color: #252525 !important; /* لون خلفية النافذة */
+  border-radius: 10px;
+  padding: 30px !important;
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* تصميم زر الإغلاق */
+.modal .close {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+}
+
+/* عند فتح النافذة */
+.modal.show {
+  display: block;
+}
+
+/* تحسين إدخال البيانات */
+.modal input,
+.modal select,
+.modal textarea {
+  width: 100%;
+  padding: 15px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 10px;
+  background: #333;
+  color: white;
+}
+
+/* تحسين زر إضافة المشروع */
+.modal button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.modal button:hover {
+  background-color: #0056b3;
+}
+
+  #searchDiv {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+.filters{
+    flex-grow: 1   ;
+    display: flex;  /* Make the container a flex container */
+    gap: 10px;      /* Optional: Adds space between the input and select */
+}
+.filters input {
+    flex-grow: 1;
+    min-width: 200px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 8px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(68, 68, 68);
+    border-image: initial;
+}
+.filters select {
+    max-width: 130px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 8px;
+    border-radius: 5px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+}
+
+.form-row > input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background: #434343;
+    color: white;
+}
+#openProjectModal {
+    background-color: rgb(0, 123, 255);
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    transition: background 0.3s;
+}
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .stat-box {
+    background-color: #333;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    width: 23%;
+    font-size: 0.9rem;
+  }
+  .chart-container {
+    margin-top: 10px;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 10px;
+    height: 80vh;
+    overflow-y: auto;
+  }
+  canvas {
+    max-height: 100%;
+  }
+  .admin-info {
+    margin-right: 20px;
+  }
+  .admin-info span {
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-right: 10px;
+  }
+  @media (max-width: 1024px) {
+    .stats {
+      flex-direction: column;
+      align-items: center;
+    }
+    .stat-box {
+      width: 80%;
+      margin-bottom: 10px;
+    }
+  }
+  @media (max-width: 768px) {
+    .a {
+      flex-direction: column;
+    }
+    .sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 2px solid #434343;
+    }
+    .sidebar ul {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+    }
+    .sidebar li {
+      font-size: 0.9rem;
+    }
+  }
+  @media (max-width: 480px) {
+    .nav {
+      flex-direction: column;
+      height: auto;
+      padding: 10px;
+    }
+    .admin-info {
+      margin-right: 0;
+      text-align: center;
+      margin-top: 5px;
+    }
+    .stats {
+      flex-direction: column;
+      align-items: center;
+    }
+    .stat-box {
+      width: 90%;
+    }
+  }
+  
+ 
+
+  .main-conten{
+    display: flex !important;
+    justify-content: start !important;
+    align-items: start;
+  }
+
+ 

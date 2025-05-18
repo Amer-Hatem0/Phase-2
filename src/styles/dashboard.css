@@ -71,7 +71,7 @@ body {
 }
 
 .sidebar li {
-  background-color: #007bff;
+  background-color: #4d4b4b;
   margin: 5px 0;
   padding: 10px;
   border-radius: 5px;
@@ -86,7 +86,7 @@ body {
 }
 
 .sidebar li.active {
-  background-color: #f0f0f0 !important;
+  background-color: #4d4b4b !important;
 }
 
 .sidebar li.active a {

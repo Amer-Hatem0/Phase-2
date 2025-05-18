@@ -1,20 +1,18 @@
-// 📁 src/pages/AdminDashboard.jsx
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { GET_ME } from '../graphql/queries';  
-// // import '../styles/dashboard.css';
+// import '../styles/dashboard.css';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const { data, loading } = useQuery(GET_ME);
-  
+
   useEffect(() => {
-    // const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (!loading && (!data?.me || data.me.role !== "ADMIN")) {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user || user.role !== "admin") {
+      alert("Access denied!");
       navigate("/login");
-    } else if (data?.me) {
-      document.getElementById("adminname").innerText = data.me.username;
+    } else {
+      document.getElementById("adminname").innerText = user.username;
     }
 
     const updateDateTime = () => {
@@ -25,7 +23,7 @@ export default function AdminDashboard() {
     updateDateTime();
     const interval = setInterval(updateDateTime, 1000);
     return () => clearInterval(interval);
-  }, [data, loading, navigate]);
+  }, [navigate]);
 
   return (
     <div className="dashboard-container min-h-screen bg-gray-900 text-white font-sans">
@@ -54,7 +52,7 @@ export default function AdminDashboard() {
         <div className="sidebar w-64 bg-gray-800 p-4 border-r border-gray-700">
           <ul className="space-y-4">
             <li className="bg-blue-600 text-center py-2 rounded font-bold text-white"><a href="">Home</a></li>
-            <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="">Projects</a></li>
+            <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="/projects">Projects</a></li>
             <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="">Tasks</a></li>
             <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="">Chat</a></li>
           </ul>

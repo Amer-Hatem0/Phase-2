@@ -1,6 +1,62 @@
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { CREATE_PROJECT } from '../graphql/schema';
+import { useMutation, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import '../styles/addmodal.css';
+const CREATE_PROJECT = gql`
+  mutation CreateProject(
+    $title: String!
+    $description: String
+    $categoryName: String!
+    $status: ProjectStatus!
+    $startDate: String
+    $endDate: String
+    $memberUsernames: [String!]!
+  ) {
+    createProject(
+      title: $title
+      description: $description
+      categoryName: $categoryName
+      status: $status
+      startDate: $startDate
+      endDate: $endDate
+      memberUsernames: $memberUsernames
+    ) {
+      id
+      title
+      description
+      status
+      startDate
+      endDate
+      category {
+        id
+        name
+      }
+      members {
+        id
+        username
+      }
+    }
+  }
+`;
+
+// Similarly for queries
+const GET_STUDENTS = gql`
+  query GetStudentOptions {
+    getStudentOptions {
+      id
+      username
+    }
+  }
+`;
+
+const GET_CATEGORIES = gql`
+  query GetAllCategories {
+    getAllCategories {
+      id
+      name
+    }
+  }
+`;
 
 export default function AddProjectModal({ onClose }) {
   const [formData, setFormData] = useState({
@@ -30,108 +86,134 @@ export default function AddProjectModal({ onClose }) {
     }
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createProject({ variables: formData });
-  };
+  const { data: studentsData } = useQuery(GET_STUDENTS);
+  const { data: categoriesData } = useQuery(GET_CATEGORIES);
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   createProject({ variables: formData });
+  // };
+  const handleSubmit = async (formData) => {
+    try {
+      await createProject({
+        variables: {
+          title: formData.title,
+          description: formData.description,
+          categoryName: formData.categoryName,
+          status: formData.status,
+          startDate: formData.startDate,
+          endDate: formData.endDate,
+          memberUsernames: formData.memberUsernames
+        },
+        // Optional: Update cache after mutation
+        update(cache, { data: { createProject } }) {
+          cache.modify({
+            fields: {
+              getProjects(existingProjects = []) {
+                return [...existingProjects, createProject];
+              }
+            }
+          });
+        }
+      });
+      onClose();
+    } catch (error) {
+      console.error("Error creating project:", error);
+    }
+  };
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 p-6 rounded-lg w-full max-w-md">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold">Add New Project</h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-white">
-            &times;
-          </button>
-        </div>
-        
+    <div className="modal-overlay">
+      <div className="modal">
+        <span className="close" onClick={onClose}>&times;</span>
+        <h2 className="modal-title">Add New Project</h2>
         <form onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <label className="block mb-1">Title</label>
-              <input
-                type="text"
-                className="w-full bg-gray-700 rounded px-3 py-2"
-                value={formData.title}
-                onChange={(e) => setFormData({...formData, title: e.target.value})}
-                required
-              />
-            </div>
-            
-            <div>
-              <label className="block mb-1">Description</label>
-              <textarea
-                className="w-full bg-gray-700 rounded px-3 py-2"
-                value={formData.description}
-                onChange={(e) => setFormData({...formData, description: e.target.value})}
-              />
-            </div>
-            
-            <div>
-              <label className="block mb-1">Category</label>
-              <input
-                type="text"
-                className="w-full bg-gray-700 rounded px-3 py-2"
-                value={formData.category}
-                onChange={(e) => setFormData({...formData, category: e.target.value})}
-              />
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block mb-1">Start Date</label>
-                <input
-                  type="date"
-                  className="w-full bg-gray-700 rounded px-3 py-2"
-                  value={formData.startDate}
-                  onChange={(e) => setFormData({...formData, startDate: e.target.value})}
-                />
-              </div>
-              
-              <div>
-                <label className="block mb-1">End Date</label>
-                <input
-                  type="date"
-                  className="w-full bg-gray-700 rounded px-3 py-2"
-                  value={formData.endDate}
-                  onChange={(e) => setFormData({...formData, endDate: e.target.value})}
-                />
-              </div>
-            </div>
-            
-            <div>
-              <label className="block mb-1">Members</label>
-              <select
-                multiple
-                className="w-full bg-gray-700 rounded px-3 py-2"
-                value={formData.members}
-                onChange={(e) => setFormData({
-                  ...formData, 
-                  members: Array.from(e.target.selectedOptions, option => option.value)
-                })}
-              >
-                {/* Populate with students from backend */}
-                <option value="student1">Student 1</option>
-                <option value="student2">Student 2</option>
-              </select>
-            </div>
+          <div className="form-row">
+            <label>Project Title:</label>
+            <input
+              type="text"
+              value={formData.title}
+              onChange={(e) => setFormData({...formData, title: e.target.value})}
+              required
+            />
           </div>
           
-          <div className="mt-6 flex justify-end space-x-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-600 rounded"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 rounded"
-            >
-              Create Project
-            </button>
+          <div className="form-row">
+            <label>Project Description:</label>
+            <textarea
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+            />
           </div>
+
+          <div className="form-row">
+            <label>Students List:</label>
+            <select
+              multiple
+              value={formData.members}
+              onChange={(e) => {
+                const options = Array.from(e.target.selectedOptions, option => option.value);
+                setFormData({...formData, memberUsernames: options});
+              }}
+              required
+            >
+              {studentsData?.getStudentOptions?.map(student => (
+                <option key={student.id} value={student.username}>
+                  {student.username}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="form-row">
+            <label>Project Category:</label>
+            <select
+              value={formData.categoryName}
+              onChange={(e) => setFormData({...formData, categoryName: e.target.value})}
+              required
+            >
+              <option value="">Select a category</option>
+              {categoriesData?.getAllCategories?.map(category => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-row">
+            <label>Start Date:</label>
+            <input
+              type="date"
+              value={formData.startDate}
+              onChange={(e) => setFormData({...formData, startDate: e.target.value})}
+            />
+          </div>
+          
+          <div className="form-row">
+            <label>End Date:</label>
+            <input
+              type="date"
+              value={formData.endDate}
+              onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+            />
+          </div>
+
+          <div className="form-row">
+            <label>Project Status:</label>
+            <select
+              value={formData.status}
+              onChange={(e) => setFormData({...formData, status: e.target.value})}
+              required
+            >
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="COMPLETED">Completed</option>
+              <option value="PENDING">Pending</option>
+              <option value="ON_HOLD">On Hold</option>
+              <option value="CANCELLED">Cancelled</option>
+            </select>
+          </div>
+          
+          <button type="submit" id="addProjectBtn">Add Project</button>
         </form>
       </div>
     </div>

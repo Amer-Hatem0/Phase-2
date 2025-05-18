@@ -1,0 +1,70 @@
+/* Project Details Sidebar */
+.project-details-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 384px;
+  height: 100vh;
+  background-color: rgb(28, 28, 28);
+  border-left: 1px solid #4a5568;
+  overflow-y: auto;
+  z-index: 40;
+}
+
+.project-details-content {
+  padding: 1.5rem;
+}
+.project-details-title {
+  color: #15d6d6;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-top: 0rem;
+}
+
+.project-meta {
+  margin-bottom: 1.5rem;
+}
+
+.project-meta-item {
+  margin-bottom: 0.5rem;
+}
+
+.project-meta-label {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.project-tasks-header {
+  color: #0de7e7;; /* cyan-400 */
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.project-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.project-no-tasks {
+  color: #a0aec0; /* gray-400 */
+  font-style: italic;
+}
+/* Task Cards */
+.task-card {
+  background-color: #2d3748; /* gray-800 */
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid #0d9488; /* teal-600 */
+}
+
+.task-info {
+  margin-bottom: 0.25rem;
+}
+
+.task-label {
+  font-weight: 700;
+  color: #ffffff;
+}

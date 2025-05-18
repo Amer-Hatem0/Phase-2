@@ -1,28 +1,48 @@
-import { useState } from 'react';
-
+import "../styles/projects.css"
 export default function ProjectCard({ project, onClick }) {
+  
+  // Format dates as YYYY-MM-DD
+  const formatDate = (timestamp) => {
+    if (!timestamp) return 'Not set';
+    const date = new Date(Number(timestamp));
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   return (
-    <div 
-      className="project-card bg-gray-800 p-4 rounded-lg border border-gray-600 hover:border-orange-400 transition-colors cursor-pointer"
-      onClick={onClick}
-    >
-      <h3 className="text-blue-500 text-lg font-semibold mb-2">{project.title}</h3>
-      <p className="mb-2"><span className="font-bold">Description:</span> {project.description}</p>
-      <p className="mb-2"><span className="font-bold">Students:</span> {project.members.join(', ')}</p>
-      <p className="mb-4"><span className="font-bold">Category:</span> {project.category}</p>
-      
-      <div className="progress-bar bg-gray-600 h-6 rounded-full mb-2 overflow-hidden">
-        <div 
-          className="progress-fill bg-blue-500 h-full flex items-center justify-center text-white text-sm"
-          style={{ width: `${project.progress}%` }}
-        >
-          {project.progress}%
-        </div>
+    <div className="project-card" onClick={onClick}>
+      <div className="card-header">
+        <h3 className="project-title">{project.title}</h3>
       </div>
+      <p><span className="font-bold">Description:</span> {project.description}</p>
+      <p><span className="font-bold">Students:</span> {project.members?.join(', ') || 'None'}</p>
+      <p><span className="font-bold">Category:</span> {project.category?.name || 'Uncategorized'}</p>
       
-      <div className="flex justify-between text-sm">
-        <span>{project.startDate}</span>
-        <span>{project.endDate}</span>
+      {/* Progress Bar with Centered Percentage */}
+      {project.progress !== undefined && (
+        <div className="relative mb-4 progress-bar-container">
+          <div className="w-full bg-[#3a3a3a] h-6 rounded-full overflow-hidden progress-bar">
+            <div 
+              className="h-full bg-[#007bff] flex items-center justify-center transition-all duration-300"
+              style={{ width: `${project.progress}%` }}
+            >
+              <span className="text-white text-xs font-bold">
+                {project.progress}%
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <div className="flex justify-between text-sm text-gray-400">
+        <div>
+          <span className="font-bold">Start:</span> {formatDate(project.startDate)}
+        </div>
+        <div>
+          <span className="font-bold">End:</span> {formatDate(project.endDate)}
+        </div>
       </div>
     </div>
   );

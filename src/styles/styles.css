@@ -1,0 +1,77 @@
+
+@tailwind utilities;
+  /* ======= Project Card ======= */
+.project-card {
+  @apply bg-[#252525] p-4 rounded-lg border-2 border-[#434343] hover:border-orange-400 transition-colors cursor-pointer;
+  max-width: 300px;
+}
+
+.card-header {
+  @apply flex justify-between items-center pb-2 mb-3 border-b border-white/20;
+}
+
+.progress-bar-container {
+  @apply w-full h-6 bg-[#434343] rounded-full overflow-hidden mt-3;
+}
+
+.progress-fill {
+  @apply h-full flex items-center justify-center text-white text-sm bg-primary-blue;
+}
+
+.project-dates {
+  @apply flex justify-between mt-3 text-sm text-gray-400;
+}
+
+/* ======= Modals (Shared Styles) ======= */
+.modal-overlay {
+  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+}
+
+.modal-container {
+  @apply bg-[#252525] p-6 rounded-lg w-full max-w-md relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-close {
+  @apply absolute top-3 right-3 text-white text-2xl cursor-pointer;
+}
+
+.modal-title {
+  @apply text-primary-blue font-bold text-xl mb-4;
+}
+
+.form-row {
+  @apply mb-4;
+}
+
+.form-row label {
+  @apply block text-white text-sm font-bold mb-1;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  @apply w-full bg-[#434343] text-white p-2 rounded border-none;
+}
+
+.modal-submit-btn {
+  @apply w-full bg-success-green hover:bg-hover-green text-white py-2 px-4 rounded mt-4 transition-colors;
+}
+
+/* ======= Animations ======= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======= Responsive ======= */
+@media (max-width: 768px) {
+  .sidebar {
+    @apply w-full border-r-0 border-b;
+  }
+  
+  .project-card {
+    @apply max-w-none;
+  }
+}

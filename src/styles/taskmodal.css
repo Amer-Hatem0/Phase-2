@@ -1,0 +1,134 @@
+ 
+dialog.modal {
+    top: 50%;  
+    left: 50%;  
+    transform: translate(-50%, -50%); 
+}
+
+ 
+.modal .close {
+    font-size: 24px; /* Make the close button larger */
+    cursor: pointer; /* Show a pointer cursor when hovering */
+    position: absolute; /* Position the close button at the top-right corner */
+    top: 10px;
+    right: 10px;
+}
+body{
+    position: relative;
+    
+}
+ .s{
+     
+    width: 400px !important;
+    display: flex;
+    align-items: center !important;
+  position: absolute;
+ margin: auto !important;
+  top: 15%;
+  left: 40%;
+ }
+.modal {
+    display: none;
+    background: #252525;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100% ;
+    max-width: 500px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin: auto ;
+    
+}
+
+/* Close button */
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* Animation for smooth popup */
+
+
+.modal {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Form Labels */
+.modal-title {
+    color: #007bff;
+    font-weight: bold;
+    text-align: left;
+}
+.form-row > label {
+    font-weight: bold;
+    font-size: small;
+    display: block;
+    margin-top: 10px;
+    color: white;
+    text-align: left;
+}
+
+/* Form Inputs */
+.form-row > select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background: #434343;
+    color: white;
+}
+.form-row > textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background: #434343;
+    color: white;
+}
+.form-row > input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background: #434343;
+    color: white;
+}
+#addtaskBtn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 25px;
+} 
+
+ #addtaskBtn:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 680px) {
+    .s{
+     
+        width: 400px !important;
+        display: flex;
+        align-items: center !important;
+      position: absolute;
+     margin: auto !important;
+      top: 15%;
+      left: 10%;
+     }
+
+}
+ 

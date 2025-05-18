@@ -4,6 +4,7 @@ import Login from './Login';
 import StudentDashboard from './pages/StudentDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './ProtectedRoute';
+import Projects from './pages/Projects'
 
 function App() {
   return (
@@ -26,6 +27,15 @@ function App() {
         element={
           <ProtectedRoute role="admin">
             <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/projects"
+        element={
+          <ProtectedRoute role="admin">
+            <Projects />
           </ProtectedRoute>
         }
       />
