@@ -1,62 +1,8 @@
 import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { gql } from '@apollo/client';
 import '../styles/addmodal.css';
-const CREATE_PROJECT = gql`
-  mutation CreateProject(
-    $title: String!
-    $description: String
-    $categoryName: String!
-    $status: ProjectStatus!
-    $startDate: String
-    $endDate: String
-    $memberUsernames: [String!]!
-  ) {
-    createProject(
-      title: $title
-      description: $description
-      categoryName: $categoryName
-      status: $status
-      startDate: $startDate
-      endDate: $endDate
-      memberUsernames: $memberUsernames
-    ) {
-      id
-      title
-      description
-      status
-      startDate
-      endDate
-      category {
-        id
-        name
-      }
-      members {
-        id
-        username
-      }
-    }
-  }
-`;
-
-// Similarly for queries
-const GET_STUDENTS = gql`
-  query GetStudentOptions {
-    getStudentOptions {
-      id
-      username
-    }
-  }
-`;
-
-const GET_CATEGORIES = gql`
-  query GetAllCategories {
-    getAllCategories {
-      id
-      name
-    }
-  }
-`;
+import { CREATE_PROJECT } from '../graphql/operations';
+import { GET_STUDENT_OPTIONS, GET_ALL_CATEGORIES } from '../graphql/queries'
 
 export default function AddProjectModal({ onClose }) {
   const [formData, setFormData] = useState({
@@ -86,8 +32,8 @@ export default function AddProjectModal({ onClose }) {
     }
   });
 
-  const { data: studentsData } = useQuery(GET_STUDENTS);
-  const { data: categoriesData } = useQuery(GET_CATEGORIES);
+  const { data: studentsData } = useQuery(GET_STUDENT_OPTIONS);
+  const { data: categoriesData } = useQuery(GET_ALL_CATEGORIES);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();

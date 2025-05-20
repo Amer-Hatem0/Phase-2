@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { GET_PROJECTS, GET_ME } from '../graphql/operations';
+import { GET_PROJECTS, GET_ME } from '../graphql/queries';
 import ProjectCard from '../components/ProjectCard';
 import ProjectDetailsSidebar from '../components/ProjectDetailsSidebar';
 import AddProjectModal from '../components/AddProjectModal';
@@ -117,7 +117,7 @@ if (loading) return (
         {/* Main Content */}
         <div className="main-content">
           <div className="header">
-            <h2 class="text-2xl font-bold text-blue-500">Projects Overview</h2>
+            <h2 className="text-2xl font-bold text-blue-500">Projects Overview</h2>
           </div>
 
           {/* Add Project and Search */}
