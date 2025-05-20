@@ -62,18 +62,31 @@
 .progress-bar-container {
     width: 100%;
     height: 25px;
-    margin-top: 10px;
+    position: relative;
+    display: flex;
     background: rgb(67, 63, 63);
     border-radius: 5px;
     overflow: hidden;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 .progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
     height: 100%;
     text-align: center;
     line-height: 25px;
     font-weight: bold;
     color: white;
     background: rgb(0, 123, 255);
+}
+.progress-value {
+  position: absolute;
+  z-index: 2;
+  display: inline-block;
 }
 .project-dates {
     display: flex

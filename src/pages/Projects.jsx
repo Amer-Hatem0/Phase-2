@@ -29,6 +29,18 @@ export default function Projects() {
   //     document.getElementById("adminname").innerText = user.username;
   //   }
   // }, [navigate]);
+
+
+// Fetch progress data
+  // const { data, loading, error } = useQuery(GET_PROJECT_PROGRESS, {
+  //   variables: { projectId: project.id },
+  //   skip: !project.id, // Skip if no project ID
+  //   pollInterval: 30000 // Optional: refresh every 30 seconds
+  // });
+
+  // // Use fetched progress or fallback to project.progress
+  // const currentProgress = data?.getProject?.progress ?? project.progress ?? 0;
+
   useEffect(() => {
     if (userData?.me) {
       if (userData.me.role === "admin") {
@@ -158,19 +170,22 @@ if (loading) return (
 
           {/* Projects Grid */}
           <div id="projectsContainer">
-            {filteredProjects.map(project => (
+            {filteredProjects.map(project => {
+              console.log('Project progress:', project.title, project.progress); // Add this line
+              return(
               <ProjectCard 
               key={project.id} 
               project={{
                 ...project,
                 members: project.members?.map(member => member.username), // Extract usernames
                 category: project.category?.name || 'Uncategorized', // Add fallback
-                progress: project.progress || 0 // Add fallback
+                progress: project.progress || 0
               }}
               // project ={project}
               onClick={() => setSelectedProject(project)}
             />
-            ))}
+            );
+          })}
           </div>
           {/* ) : (
             <div className="flex justify-center items-center h-64">

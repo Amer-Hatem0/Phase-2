@@ -33,6 +33,7 @@ export const GET_PROJECTS = gql`
       status
       startDate
       endDate
+      progress
       category {
         id
         name
@@ -135,6 +136,19 @@ export const GET_ALL_CATEGORIES = gql`
     getAllCategories {
       id
       name
+    }
+  }
+`;
+
+export const GET_PROJECT_PROGRESS = gql`
+  query GetProjectProgress($projectId: ID!) {
+    getProject(id: $projectId) {
+      id
+      progress
+      tasks {
+        id
+        progress
+      }
     }
   }
 `;

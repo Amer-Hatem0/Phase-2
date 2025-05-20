@@ -1,6 +1,20 @@
 import "../styles/projects.css"
+import { useQuery } from '@apollo/client';
+import { GET_PROJECT_PROGRESS } from '../graphql/queries';
+
 export default function ProjectCard({ project, onClick }) {
   
+
+  // // Fetch progress data
+  // const { data, loading, error } = useQuery(GET_PROJECT_PROGRESS, {
+  //   variables: { projectId: project.id },
+  //   skip: !project.id, // Skip if no project ID
+  //   pollInterval: 30000 // Optional: refresh every 30 seconds
+  // });
+
+  // // Use fetched progress or fallback to project.progress
+  // const currentProgress = data?.getProject?.progress ?? project.progress ?? 0;
+
   // Format dates as YYYY-MM-DD
   const formatDate = (timestamp) => {
     if (!timestamp) return 'Not set';
@@ -20,21 +34,20 @@ export default function ProjectCard({ project, onClick }) {
       <p><span className="font-bold">Students:</span> {project.members?.join(', ') || 'None'}</p>
       <p><span className="font-bold">Category:</span> {project.category}</p>
       
-      {/* Progress Bar with Centered Percentage */}
-      {project.progress !== undefined && (
-        <div className="relative mb-4 progress-bar-container">
-          <div className="w-full bg-[#3a3a3a] h-6 rounded-full overflow-hidden progress-bar">
-            <div 
-              className="h-full bg-[#007bff] flex items-center justify-center transition-all duration-300"
-              style={{ width: `${project.progress}%` }}
-            >
-              <span className="text-white text-xs font-bold">
-                {project.progress}%
-              </span>
-            </div>
+    {/* Progress Bar with Centered Percentage */}
+      <div className="relative mb-4 progress-bar-container">
+        <div className="w-full bg-[#3a3a3a] h-6 rounded-full overflow-hidden progress-bar-container">
+          <span className="text-white text-xs font-bold progress-value">
+              {project.progress}%
+            </span>
+          <div className="progress-bar" 
+            
+            style={{ width: `${project.progress}%` }}
+          >
+            
           </div>
         </div>
-      )}
+      </div>
       
       <div className="flex justify-between text-sm text-gray-400">
         <div>
