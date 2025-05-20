@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_PROJECT } from '../graphql/operations';
 import { GET_STUDENT_OPTIONS, GET_ALL_CATEGORIES } from '../graphql/queries'
 import '../styles/addmodal.css';
-
+import { GET_PROJECTS } from '../graphql/queries';
 export default function AddProjectModal({ onClose }) {
   const [formData, setFormData] = useState({
     title: '',
@@ -34,7 +34,12 @@ export default function AddProjectModal({ onClose }) {
           startDate: formData.startDate,
           endDate: formData.endDate,
           memberUsernames: formData.memberUsernames
-        }
+        },
+      refetchQueries: [{ query: GET_PROJECTS }],
+      update: (cache) => {
+        cache.evict({ fieldName: "getProjects" });
+        cache.gc();
+      }
       });
       onClose();
     } catch (error) {
@@ -90,7 +95,7 @@ export default function AddProjectModal({ onClose }) {
             </select>
           </div>
           
-          <div className="form-row">
+          {/* <div className="form-row">
             <label>Project Category:</label>
             <select
               value={formData.categoryName}
@@ -104,7 +109,26 @@ export default function AddProjectModal({ onClose }) {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
+
+          <div className="form-row">
+  <label>Project Category:</label>
+  <div className="category-combobox">
+    <input
+      list="categories"
+      value={formData.categoryName}
+      onChange={(e) => setFormData({...formData, categoryName: e.target.value})}
+      onInput={(e) => setFormData({...formData, categoryName: e.target.value})}
+      placeholder="Type or select a category"
+      required
+    />
+    <datalist id="categories">
+      {categoriesData?.getAllCategories?.map(category => (
+        <option key={category.id} value={category.name} />
+      ))}
+    </datalist>
+  </div>
+</div>
 
           <div className="form-row">
             <label>Start Date:</label>

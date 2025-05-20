@@ -86,6 +86,7 @@
   padding: 10px;
   font-size: 1rem;
   transition: border-color 0.3s;
+  width: 100%;
 }
 
 .form-row input:focus,
@@ -129,4 +130,71 @@
     height: 90vh;
     padding: 20px;
   }
+}
+
+/* Add these styles to your CSS file */
+
+.category-combobox {
+  position: relative;
+  width: 100%;
+}
+
+.category-input {
+  width: 100%;
+  padding: 10px;
+  background-color: #444;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.custom-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #444;
+  border: 1px solid #555;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 1000;
+  display: none;
+}
+
+.category-combobox:focus-within .custom-options {
+  display: block;
+}
+
+.custom-option {
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+}
+
+.custom-option:hover {
+  background-color: #555;
+}
+/* This may not work in all browsers */
+datalist {
+  position:absolute;
+  width:100%;
+  background-color: #444;
+  border: 1px solid #555;
+  border-radius: 0 0 4px 4px;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+datalist option {
+  padding: 8px;
+  color: white;
+}
+
+datalist option:hover {
+  background-color: #555;
 }
