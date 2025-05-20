@@ -122,7 +122,7 @@ if (loading) return (
           <ul className="space-y-4">
             <li><a href="/admin/:id">Home</a></li>
             <li className="active"><a href="/projects">Projects</a></li>
-            <li><a href="">Tasks</a></li>
+            <li><a href="/tasks">Tasks</a></li>
             <li><a href="">Chat</a></li>
           </ul>
         </div>

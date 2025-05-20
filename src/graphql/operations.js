@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-//k
 // Authentication Mutations
 export const SIGN_UP = gql`
   mutation SignUp(

@@ -53,8 +53,8 @@ export default function AdminDashboard() {
           <ul className="space-y-4">
             <li className="bg-blue-600 text-center py-2 rounded font-bold text-white"><a href="">Home</a></li>
             <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="/projects">Projects</a></li>
-            <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="">Tasks</a></li>
-            <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="">Chat</a></li>
+            <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="/tasks">Tasks</a></li>
+            <li className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded"><a href="/chats">Chat</a></li>
           </ul>
         </div>
 

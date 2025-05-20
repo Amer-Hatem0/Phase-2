@@ -95,6 +95,29 @@ export const GET_ALL_TASKS = gql`
   }
 `;
 
+
+
+export const GET_MY_TASKS = gql`
+  query GetMyTasks {
+    getMyTasks {
+      id
+      title
+      description
+      status
+      
+      dueDate
+      project {
+        id
+        title
+      }
+      assignedTo {
+        id
+        username
+      }
+      
+    }
+  }
+`;
 export const GET_PROJECT_TASKS = gql`
   query GetProjectTasks($projectId: ID!) {
     getProjectTasks(projectId: $projectId) {

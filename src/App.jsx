@@ -5,6 +5,9 @@ import StudentDashboard from './pages/StudentDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './ProtectedRoute';
 import Projects from './pages/Projects'
+import Tasks from './pages/Tasks';
+import Chats from './pages/Chats';
+import ChatsStd from './pages/ChatsStd';
 
 function App() {
   return (
@@ -37,6 +40,25 @@ function App() {
           <ProtectedRoute role="admin">
             <Projects />
           </ProtectedRoute>
+        }
+      />
+
+       <Route
+        path="/tasks"
+        element={
+            <Tasks />
+        }
+      />
+       <Route
+        path="/chats"
+        element={
+            <Chats />
+        }
+      />
+      <Route
+        path="/student/chats"
+        element={
+            <ChatsStd />
         }
       />
     </Routes>

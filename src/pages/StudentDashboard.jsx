@@ -105,7 +105,7 @@ export default function StudentDashboard() {
           <ul>
             <li className="active"><a href="/student">Home</a></li>
             <li><a href="/student/projects">My Projects</a></li>
-            <li><a href="/student/tasks">My Tasks</a></li>
+            <li><a href="/tasks">My Tasks</a></li>
             <li><a href="/student/chats">Chat</a></li>
           </ul>
         </div>
