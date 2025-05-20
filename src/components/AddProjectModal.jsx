@@ -1,45 +1,29 @@
 import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import '../styles/addmodal.css';
 import { CREATE_PROJECT } from '../graphql/operations';
 import { GET_STUDENT_OPTIONS, GET_ALL_CATEGORIES } from '../graphql/queries'
+import '../styles/addmodal.css';
 
 export default function AddProjectModal({ onClose }) {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    category: '',
+    categoryName: '',
+    status: 'IN_PROGRESS',
     startDate: '',
     endDate: '',
-    members: []
+    memberUsernames: []
   });
 
-  const [createProject] = useMutation(CREATE_PROJECT, {
-    variables: {
-      title: formData.title,
-      description: formData.description,
-      startDate: formData.startDate,
-      endDate: formData.endDate,
-      memberIds: formData.members
-    },
-    onCompleted: () => {
-      onClose();
-      // Optionally refetch queries here
-    },
-    onError: (error) => {
-      console.error("Error creating project:", error);
-      // Handle error (show toast, etc.)
-    }
-  });
+  
+
+  const [createProject] = useMutation(CREATE_PROJECT);
 
   const { data: studentsData } = useQuery(GET_STUDENT_OPTIONS);
   const { data: categoriesData } = useQuery(GET_ALL_CATEGORIES);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   createProject({ variables: formData });
-  // };
-  const handleSubmit = async (formData) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       await createProject({
         variables: {
@@ -50,16 +34,6 @@ export default function AddProjectModal({ onClose }) {
           startDate: formData.startDate,
           endDate: formData.endDate,
           memberUsernames: formData.memberUsernames
-        },
-        // Optional: Update cache after mutation
-        update(cache, { data: { createProject } }) {
-          cache.modify({
-            fields: {
-              getProjects(existingProjects = []) {
-                return [...existingProjects, createProject];
-              }
-            }
-          });
         }
       });
       onClose();
@@ -67,12 +41,18 @@ export default function AddProjectModal({ onClose }) {
       console.error("Error creating project:", error);
     }
   };
+
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <span className="close" onClick={onClose}>&times;</span>
-        <h2 className="modal-title">Add New Project</h2>
-        <form onSubmit={handleSubmit}>
+        <div className="modal-header">
+          <h2 className="modal-title">Add New Project</h2>
+          <button className="close-btn" onClick={onClose}>
+            &times;
+          </button>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-row">
             <label>Project Title:</label>
             <input
@@ -95,7 +75,7 @@ export default function AddProjectModal({ onClose }) {
             <label>Students List:</label>
             <select
               multiple
-              value={formData.members}
+              value={formData.memberUsernames}
               onChange={(e) => {
                 const options = Array.from(e.target.selectedOptions, option => option.value);
                 setFormData({...formData, memberUsernames: options});
@@ -158,8 +138,10 @@ export default function AddProjectModal({ onClose }) {
               <option value="CANCELLED">Cancelled</option>
             </select>
           </div>
-          
-          <button type="submit" id="addProjectBtn">Add Project</button>
+
+          <button type="submit" className="submit-btn">
+            Add Project
+          </button>
         </form>
       </div>
     </div>

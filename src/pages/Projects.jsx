@@ -6,6 +6,7 @@ import ProjectCard from '../components/ProjectCard';
 import ProjectDetailsSidebar from '../components/ProjectDetailsSidebar';
 import AddProjectModal from '../components/AddProjectModal';
 import "../styles/projects.css"
+import "../styles/addmodal.css"
 export default function Projects() {
   const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState(null);
@@ -125,7 +126,11 @@ if (loading) return (
             <button 
               type="button" 
               id="openProjectModal" 
-              onClick={() => setIsAddModalOpen(true)}
+              onClick={(e) => {
+            e.stopPropagation();
+            setIsAddModalOpen(true);
+          }}
+              
             >
               Add New Project
             </button>

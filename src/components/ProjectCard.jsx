@@ -18,7 +18,7 @@ export default function ProjectCard({ project, onClick }) {
       </div>
       <p><span className="font-bold">Description:</span> {project.description}</p>
       <p><span className="font-bold">Students:</span> {project.members?.join(', ') || 'None'}</p>
-      <p><span className="font-bold">Category:</span> {project.category?.name || 'Uncategorized'}</p>
+      <p><span className="font-bold">Category:</span> {project.category}</p>
       
       {/* Progress Bar with Centered Percentage */}
       {project.progress !== undefined && (
